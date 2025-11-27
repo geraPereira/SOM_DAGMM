@@ -28,13 +28,17 @@ def one_hot_encoding(data, cols):
 def label_encoding(data, cols):
     encode_data = data[cols]
     encoded_data = pd.DataFrame()
+    print("chegueiAAAA")
     encoder = preprocessing.LabelEncoder()
+    print("cheguei")
     for column in encode_data:
+        print("cheguei 1")
         new_data = encoder.fit_transform(encode_data[column])
         new_data = pd.DataFrame(new_data, columns=[column])
         encoded_data = pd.concat([encoded_data, new_data], axis=1)
     data.drop(cols, axis=1, inplace=True)
     data = pd.concat([data, encoded_data], axis=1)
+    print("sai")
     return data
 
 def get_labels(data, name):
@@ -100,4 +104,5 @@ def cosine_similarity(x1, x2, eps=1e-8):
     dot_prod = torch.sum(x1 * x2, dim=1)  
     dist_x1 = torch.norm(x1, p=2, dim=1)  
     dist_x2 = torch.norm(x2, p=2, dim=1)  
+
     return dot_prod / np.max(dist_x1*dist_x2, eps)
