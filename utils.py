@@ -26,7 +26,9 @@ def one_hot_encoding(data, cols):
     return data
 
 def label_encoding(data, cols):
+    print("cheguei")
     encode_data = data[cols]
+    print("chegueiA")
     encoded_data = pd.DataFrame()
     print("chegueiAAAA")
     encoder = preprocessing.LabelEncoder()
@@ -106,3 +108,4 @@ def cosine_similarity(x1, x2, eps=1e-8):
     dist_x2 = torch.norm(x2, p=2, dim=1)  
 
     return dot_prod / np.max(dist_x1*dist_x2, eps)
+
