@@ -1,0 +1,30 @@
+# Arquivos de compilação do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ambientes virtuais
+venv/
+env/
+*.egg-info/
+
+# Arquivos do sistema operacional
+.DS_Store  # MacOS
+Thumbs.db  # Windows
+
+# Arquivos de configuração do editor
+.vscode/
+.idea/
+
+# Arquivos de logs
+*.log
+
+# Arquivos de banco de dados temporários
+*.sqlite3
+
+# Arquivos de teste
+*.coverage
+*.hypothesis/
+
+# Arquivos específicos do Python
+*.pyd
