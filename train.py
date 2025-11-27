@@ -52,20 +52,20 @@ if args.dataset == 'kdd':
     data = load_data('data/NSL-KDD/KDDTrain+.txt', names)
     categorical_cols = [1,2,3,4]
     Y = get_labels(data, args.dataset)
-
+print("A")
 #Select features
 if args.features == "categorical":
     data = data[categorical_cols]
 if args.features == "numerical":
     data = remove_cols(data, categorical_cols)
-
+print("a")
 #encode categorical variables 
 if args.embed == 'one_hot':
     data = one_hot_encoding(data, categorical_cols)
 if args.embed == 'label_encode':
     data = label_encoding(data, categorical_cols)
 
-
+print("B")
 # Remove columns with NA values
 data = fill_na(data)
 # normalize data
@@ -110,6 +110,7 @@ for epoch in range(epochs):
         running_loss += loss.item()
     print(running_loss)
 torch.save(net, save_path)
+
 
 
 
