@@ -50,7 +50,7 @@ if args.dataset == 'arrhythmia':
 if args.dataset == 'kdd':
     names = [i for i in range(0,43)]
     data = load_data('data/NSL-KDD/KDDTrain+.txt', names)
-    categorical_cols = [1,2,3,4]
+    categorical_cols = [5,6,7,8]
     Y = get_labels(data, args.dataset)
 print("A")
 #Select features
@@ -110,6 +110,7 @@ for epoch in range(epochs):
         running_loss += loss.item()
     print(running_loss)
 torch.save(net, save_path)
+
 
 
 
