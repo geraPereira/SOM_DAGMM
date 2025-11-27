@@ -26,15 +26,10 @@ def one_hot_encoding(data, cols):
     return data
 
 def label_encoding(data, cols):
-    print(cols)
     encode_data = data[cols]
-    print("chegueiA")
     encoded_data = pd.DataFrame()
-    print("chegueiAAAA")
     encoder = preprocessing.LabelEncoder()
-    print("cheguei")
     for column in encode_data:
-        print("cheguei 1")
         new_data = encoder.fit_transform(encode_data[column])
         new_data = pd.DataFrame(new_data, columns=[column])
         encoded_data = pd.concat([encoded_data, new_data], axis=1)
