@@ -39,6 +39,18 @@ save_path = os.path.join(args.dataset + "_" + args.features + "_" + args.embed)
 #read data
 # get labels from dataset and drop them if available
 
+if args.dataset == 'IDS2018':
+    data_list = []  # Lista para armazenar os DataFrames a serem concatenados
+    for d in os.listdir('data/CSE-CIC-IDS2018'):
+        new_data = load_data(f'data/CSE-CIC-IDS2018/{d}')
+        data_list.append(new_data)  # Adiciona o novo DataFrame à lista
+    
+    # Concatena todos os DataFrames na lista
+    data = pd.concat(data_list, ignore_index=True)
+    data.drop(['  q   q   q   Timestamp', 'Timestamp'], axis=1, inplace=True)
+    categorical_cols = []
+    Y = get_labels(data, args.dataset)
+
 
 if args.dataset == 'credit_card':
     data = load_data('data/CreditCardFraud/creditcard.csv')
@@ -110,6 +122,7 @@ for epoch in range(epochs):
         running_loss += loss.item()
     print(running_loss)
 torch.save(net, save_path)
+
 
 
 
