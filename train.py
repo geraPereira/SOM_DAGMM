@@ -47,7 +47,7 @@ if args.dataset == 'ids':
     
     # Concatena todos os DataFrames na lista
     data = pd.concat(data_list, ignore_index=True)
-    data.drop(['  q   q   q   Timestamp', 'Timestamp'], axis=1, inplace=True)
+    data.drop(['Timestamp'], axis=1, inplace=True)
     categorical_cols = []
     Y = get_labels(data, args.dataset)
 
