@@ -40,7 +40,7 @@ def main():
     print("Shape final:", df.shape)
 
     # Se quiser salvar o resultado amostrado:
-    out_path = "CSE-CIC-IDS2018_sample.csv"
+    out_path = "data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample.csv"
     df.to_csv(out_path, index=False)
     print(f"Arquivo salvo em: {out_path}")
 
