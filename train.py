@@ -39,7 +39,7 @@ save_path = os.path.join(args.dataset + "_" + args.features + "_" + args.embed)
 #read data
 # get labels from dataset and drop them if available
 
-if args.dataset == 'IDS2018':
+if args.dataset == 'ids':
     data_list = []  # Lista para armazenar os DataFrames a serem concatenados
     for d in os.listdir('data/CSE-CIC-IDS2018'):
         new_data = load_data(f'data/CSE-CIC-IDS2018/{d}')
@@ -122,6 +122,7 @@ for epoch in range(epochs):
         running_loss += loss.item()
     print(running_loss)
 torch.save(net, save_path)
+
 
 
 
