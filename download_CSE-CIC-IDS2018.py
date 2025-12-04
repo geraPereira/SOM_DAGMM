@@ -1,11 +1,18 @@
 import os
 import pandas as pd
+import kagglehub
 
 RANDOM_SEED = 42  # ou o valor que você quiser
 
 def main():
-    print("Start")
+    
 
+    # Download latest version
+    path = kagglehub.dataset_download("solarmainframe/ids-intrusion-csv")
+    
+    print("Path to dataset files:", path)
+
+    
     base_path = "/kaggle/input/ids-intrusion-csv"
     print("Lendo arquivos de:", base_path)
 
