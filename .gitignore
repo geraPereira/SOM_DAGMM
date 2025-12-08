@@ -1,1 +1,40 @@
+# Arquivos de compilação do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ambientes virtuais
+venv/
+env/
+*.egg-info/
+
+# Arquivos do sistema operacional
+.DS_Store  # MacOS
+Thumbs.db  # Windows
+
+# Arquivos de configuração do editor
+.vscode/
+.idea/
+
+# Arquivos de logs
+*.log
+
+# Arquivos de banco de dados temporários
+*.sqlite3
+
+# Arquivos de teste
+*.coverage
+*.hypothesis/
+
+# Arquivos específicos do Python
+*.pyd
+
+# dataframes gerados
+data/*.csv
+data/*.h5
+data/*.parquet  
+
 data/Reserva/CSE-CIC-IDS2018_sample10.csv
+data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample1.csv
+data/Reserva/*.csv
+data/CSE-CIC-IDS2018/*.csv
