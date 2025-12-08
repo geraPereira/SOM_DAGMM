@@ -41,6 +41,12 @@ def label_encoding(data, cols):
     return data
 
 def get_labels(data, name):
+    if name == "ids":
+        label = data['Label']
+        label = np.where(label == "BENIGN", 0, 1)
+        data.drop(['Label'], axis = 1, inplace=True)
+        
+
     if name == 'credit_card':
         label = data['Class']
         data.drop(['Class'], axis = 1, inplace=True)        
@@ -67,9 +73,16 @@ def get_confusion_matrix(y_pred, y):
     return tn, fp, fn, tp
 
 def normalize_cols(data):
-    sc = MinMaxScaler (feature_range = (0,1))
-    data = sc.fit_transform(data)
-    data = pd.DataFrame(data)  
+    data = data.fillna(0)
+    for col in data.columns:
+        data[col] = pd.to_numeric(data[col], errors='ignore')
+
+    num_cols = data.select_dtypes(include=[np.number]).columns
+
+    if len(num_cols) == 0:
+        raise ValueError("DataFrame não tem colunas numéricas para normalizar. Verifique os dtypes de 'data'.")
+    sc = MinMaxScaler(feature_range=(0, 1))
+    data[num_cols] = sc.fit_transform(data[num_cols]) 
     return data  
 
 def merge_cols(data_1, data_2):

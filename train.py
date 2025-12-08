@@ -63,6 +63,7 @@ if args.dataset == 'kdd':
     names = [i for i in range(0,43)]
     data = load_data('data/NSL-KDD/KDDTrain+.txt', names)
     categorical_cols = [5,6,7,8]
+    print(data.shape)
     Y = get_labels(data, args.dataset)
 print("A")
 #Select features
