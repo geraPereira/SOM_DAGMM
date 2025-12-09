@@ -65,20 +65,17 @@ if args.dataset == 'kdd':
     categorical_cols = [5,6,7,8]
     print(data.shape)
     Y = get_labels(data, args.dataset)
-print("A")
 #Select features
 if args.features == "categorical":
     data = data[categorical_cols]
 if args.features == "numerical":
     data = remove_cols(data, categorical_cols)
-print("a")
 #encode categorical variables 
 if args.embed == 'one_hot':
     data = one_hot_encoding(data, categorical_cols)
 if args.embed == 'label_encode':
     data = label_encoding(data, categorical_cols)
 
-print("B")
 # Remove columns with NA values
 data = fill_na(data)
 # normalize data

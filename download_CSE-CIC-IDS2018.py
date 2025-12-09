@@ -27,7 +27,7 @@ def main():
                     # Lê em chunks para economizar memória
                     for chunk in pd.read_csv(file_path, chunksize=10000, low_memory=False):
                         # Amostra 10% de cada chunk
-                        df_list.append(chunk.sample(frac=0.01, random_state=RANDOM_SEED)) # 1%
+                        df_list.append(chunk.sample(frac=0.1, random_state=RANDOM_SEED)) # 1%
     else:
         print("Pasta não encontrada:", base_path)
         return
@@ -40,7 +40,7 @@ def main():
     print("Shape final:", df.shape)
 
     # Se quiser salvar o resultado amostrado:
-    out_path = "data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample1.csv"
+    out_path = "data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample10.csv"
     df.to_csv(out_path, index=False)
     print(f"Arquivo salvo em: {out_path}")
 

@@ -26,18 +26,22 @@ def one_hot_encoding(data, cols):
     return data
 
 def label_encoding(data, cols):
-    print(cols)
-    encode_data = data[cols]
-    print(encode_data)
-    encoded_data = pd.DataFrame()
     encoder = preprocessing.LabelEncoder()
-    for column in encode_data:
-        new_data = encoder.fit_transform(encode_data[column])
-        new_data = pd.DataFrame(new_data, columns=[column])
-        encoded_data = pd.concat([encoded_data, new_data], axis=1)
-    data.drop(cols, axis=1, inplace=True)
-    data = pd.concat([data, encoded_data], axis=1)
-    print("sai")
+
+    if len(cols) == 0:
+        return data
+    if isinstance(cols[0], int): # Caso 1: cols são índices (int) → usar iloc
+        for idx in cols:
+            col_name = data.columns[idx]
+            print("Label encoding coluna (por índice):", idx, "->", col_name)
+            data[col_name] = encoder.fit_transform(data[col_name].astype(str))
+
+    else: # Caso 2: cols são nomes (str)
+        for col_name in cols:
+            print("Label encoding coluna (por nome):", col_name)
+            data[col_name] = encoder.fit_transform(data[col_name].astype(str))
+
+    print("sai de label_encoding")
     return data
 
 def get_labels(data, name):
@@ -73,17 +77,23 @@ def get_confusion_matrix(y_pred, y):
     return tn, fp, fn, tp
 
 def normalize_cols(data):
+    # 1) Converte tudo que der pra número; o que não der vira NaN
+    data = data.apply(pd.to_numeric, errors='coerce')
+    # 2) Troca +inf e -inf por NaN
+    data.replace([np.inf, -np.inf], np.nan, inplace=True)
+    # 3) Preenche NaN com 0
     data = data.fillna(0)
-    for col in data.columns:
-        data[col] = pd.to_numeric(data[col], errors='ignore')
-
-    num_cols = data.select_dtypes(include=[np.number]).columns
-
+    # 4) Agora todas as colunas são numéricas
+    num_cols = data.columns
     if len(num_cols) == 0:
-        raise ValueError("DataFrame não tem colunas numéricas para normalizar. Verifique os dtypes de 'data'.")
+        raise ValueError("DataFrame não tem colunas numéricas para normalizar.")
+    # 5) Escala com MinMaxScaler
     sc = MinMaxScaler(feature_range=(0, 1))
-    data[num_cols] = sc.fit_transform(data[num_cols]) 
-    return data  
+    data_num = sc.fit_transform(data[num_cols])
+    # 6) Volta como DataFrame numérico puro
+    data_num = pd.DataFrame(data_num, columns=num_cols)
+
+    return data_num
 
 def merge_cols(data_1, data_2):
     data = pd.concat([data_1, data_2], axis=1)

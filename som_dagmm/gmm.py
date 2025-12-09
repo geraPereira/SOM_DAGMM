@@ -85,7 +85,20 @@ class Mixture(nn.Module):
         #       new variables and conversions from numpy?
         batch_size, _ = samples.shape
         out_values = []
-        inv_sigma = torch.inverse(self.Sigma)
+        # Antes: inv_sigma = torch.inverse(self.Sigma)
+
+        # Regularização da matriz de covariância
+        Sigma = self.Sigma
+        eps = 1e-6  # pode aumentar para 1e-5 ou 1e-4 se ainda der problema
+
+        # Garante matriz identidade com o mesmo device/dtype
+        eye = torch.eye(Sigma.size(-1), device=Sigma.device, dtype=Sigma.dtype)
+
+        # Adiciona eps na diagonal para evitar singularidade
+        Sigma_reg = Sigma + eps * eye
+
+        inv_sigma = torch.inverse(Sigma_reg)
+        #######################################
         det_sigma = np.linalg.det(self.Sigma.data.cpu().numpy())
         det_sigma = torch.from_numpy(det_sigma.reshape([1])).float()
         det_sigma = torch.autograd.Variable(det_sigma)

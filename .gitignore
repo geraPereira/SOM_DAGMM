@@ -39,5 +39,5 @@ data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample1.csv
 data/Reserva/*.csv
 data/CSE-CIC-IDS2018/*.csv
 
-data/CSE-CIC-IDS2018/
-data/Reserva/
+#data/CSE-CIC-IDS2018/
+#data/Reserva/
