@@ -37,7 +37,8 @@ save_path = os.path.join(args.dataset + "_" + args.features + "_" + args.embed)
 # get labels from dataset and drop them if available
 if args.dataset == 'ids':
     data = load_data('data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample5.csv')
-    data = remove_cols(data, ['Flow ID', 'Source IP', 'Source Port', 'Destination IP', 'Destination Port', 'Timestamp'])
+    data.drop(['Timestamp'], axis=1, inplace=True)
+    categorical_cols = []
     Y = get_labels(data, args.dataset)
 if args.dataset == 'credit_card':
     data = load_data('data/CreditCardFraud/creditcard.csv')

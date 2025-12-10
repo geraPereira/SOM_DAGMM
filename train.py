@@ -104,7 +104,7 @@ estimation = EstimationNetwork()
 gmm = GMM(2,6)
 mix = Mixture(6)
 dagmm = DAGMM(compression, estimation, gmm)
-net = SOM_DAGMM(dagmm)
+net = SOM_DAGMM(dagmm, dataset=args.dataset)
 optimizer =  optim.Adam(net.parameters(), lr=1e-4)
 for epoch in range(epochs):
     print('EPOCH {}:'.format(epoch + 1))
@@ -117,9 +117,7 @@ for epoch in range(epochs):
         loss = L_loss + G_loss
         # 🔒 Guardião anti-inf/nan
         if not torch.isfinite(loss):
-            print(f"[WARN] loss não finito no epoch {epoch+1}, batch {i}")
-            print("L_loss:", L_loss.detach().cpu().item(), 
-                  "G_loss:", G_loss.detach().cpu().item())
+            print(f"Warning: non-finite loss detected at epoch {epoch + 1}, batch {i + 1}. Skipping this batch.")
             # pula este batch pra não contaminar o treino
             continue
         loss.backward()
