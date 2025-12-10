@@ -27,7 +27,7 @@ def main():
                     # Lê em chunks para economizar memória
                     for chunk in pd.read_csv(file_path, chunksize=10000, low_memory=False):
                         # Amostra 10% de cada chunk
-                        df_list.append(chunk.sample(frac=0.1, random_state=RANDOM_SEED)) # 1%
+                        df_list.append(chunk.sample(frac=0.05, random_state=RANDOM_SEED)) # 1%
     else:
         print("Pasta não encontrada:", base_path)
         return

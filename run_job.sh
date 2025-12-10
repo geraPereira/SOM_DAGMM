@@ -13,7 +13,7 @@
 
 
 # Carrega o módulo do Miniforge
-module load miniforge3/2025.07
+module load miniforge3
 
 # Habilita o comando conda dentro do job
 source "$(conda info --base)/etc/profile.d/conda.sh"

@@ -35,6 +35,10 @@ args = parse_args()
 save_path = os.path.join(args.dataset + "_" + args.features + "_" + args.embed)
 #read data
 # get labels from dataset and drop them if available
+if args.dataset == 'ids':
+    data = load_data('data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample10.csv')
+    data = remove_cols(data, ['Flow ID', 'Source IP', 'Source Port', 'Destination IP', 'Destination Port', 'Timestamp'])
+    Y = get_labels(data, args.dataset)
 if args.dataset == 'credit_card':
     data = load_data('data/CreditCardFraud/creditcard.csv')
     Y = get_labels(data, args.dataset)

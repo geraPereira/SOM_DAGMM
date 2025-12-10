@@ -34,8 +34,6 @@ data/*.csv
 data/*.h5
 data/*.parquet  
 
-data/Reserva/CSE-CIC-IDS2018_sample10.csv
-data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample1.csv
 data/Reserva/*.csv
 data/CSE-CIC-IDS2018/*.csv
 

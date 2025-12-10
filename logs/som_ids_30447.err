@@ -16,3 +16,4 @@ Also make sure that all modulefiles written in TCL start with the string
   data = pd.read_csv(file_path, names = names)
 /home/CIN/gpsj2/SOM_DAGMM/utils.py:114: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
   data = data.fillna(value = 0, axis=1)
+slurmstepd: error: *** JOB 30447 ON cluster-node2 CANCELLED AT 2025-12-10T16:26:49 ***
