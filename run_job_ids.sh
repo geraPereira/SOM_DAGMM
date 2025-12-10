@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=som_kdd
+#SBATCH --job-name=som_ids
 #SBATCH --partition=gpu
 #SBATCH -p short-complex
 #SBATCH --qos=complex
@@ -28,8 +28,15 @@ echo "Iniciando treino em $(hostname)"
 echo "Começou em $(date)"
 
 # Rodar o train
+python3 train.py \
+  --dataset ids \
+  --embed label_encode \
+  --features numerical \
+  --epoch 100 \
+  --batch_size 1024
+
 python eval.py \
-  --dataset kdd \
+  --dataset ids \
   --embed label_encode \
   --features numerical \
   --threshold 20
