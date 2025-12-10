@@ -161,11 +161,31 @@ class Mixture(nn.Module):
         denom = torch.sum(affiliations)
         self.Sigma.data = (num / denom).data + self.eps_Sigma
 
-    def gmm_loss (self, out, L1, L2):
-        term1 = (L1 * torch.sum(out))/len(out)
-        k, D = self.Sigma.size()
-        cov_diag = 0
-        for i in range(k):
-            cov_diag = cov_diag + torch.sum(1/self.Sigma.diag())
+    def gmm_loss(self, out, L1, L2):
+        # out: normalmente são as "energias" ou scores por amostra
+
+        # --- Termo 1: média de out, com clamp ---
+        # Em vez de sum/len, usa mean direto
+        term1 = L1 * out.mean()
+
+        # --- Termo 2: penalização baseada na diagonal de Sigma ---
+        # Pega a diagonal
+        sigma_diag = self.Sigma.diag()  # shape [k*D] ou [k] dependendo de como Sigma é montada
+
+        # Evita zeros ou valores ridiculamente pequenos/grandes
+        sigma_diag = torch.clamp(sigma_diag, min=1e-6, max=1e6)
+
+        # Usa 1 / diag(Sigma) mas agora garantidamente finito
+        cov_diag = torch.sum(1.0 / sigma_diag)
+
+        # Opcional: normalizar pela quantidade de elementos
+        # cov_diag = cov_diag / sigma_diag.numel()
+
         term2 = L2 * cov_diag
-        return (term1 + term2)
+
+        loss = term1 + term2
+
+        # Clamp final pra garantir que não devolve inf/nan
+        loss = torch.clamp(loss, -1e6, 1e6)
+
+        return loss

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=som_ids
+#SBATCH --job-name=som_kdd
 #SBATCH --partition=gpu
 #SBATCH -p short-complex
 #SBATCH --qos=complex
@@ -29,7 +29,7 @@ echo "Começou em $(date)"
 
 # Rodar o train
 python3 train.py \
-  --dataset ids \
+  --dataset kdd \
   --embed label_encode \
   --features numerical \
   --epoch 100 \

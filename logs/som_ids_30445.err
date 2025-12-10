@@ -1,0 +1,15 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"miniforge3/2025.07"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "miniforge3/2025.07"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+/tmp/slurmd/job30445/slurm_script: line 19: conda: command not found
+/tmp/slurmd/job30445/slurm_script: line 19: /etc/profile.d/conda.sh: No such file or directory
+slurmstepd: error: *** JOB 30445 ON cluster-node2 CANCELLED AT 2025-12-10T01:56:27 ***

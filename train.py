@@ -115,6 +115,13 @@ for epoch in range(epochs):
         L_loss = compression.reconstruction_loss(data[0])
         G_loss = mix.gmm_loss(out=out, L1=0.1, L2=0.005)
         loss = L_loss + G_loss
+        # 🔒 Guardião anti-inf/nan
+        if not torch.isfinite(loss):
+            print(f"[WARN] loss não finito no epoch {epoch+1}, batch {i}")
+            print("L_loss:", L_loss.detach().cpu().item(), 
+                  "G_loss:", G_loss.detach().cpu().item())
+            # pula este batch pra não contaminar o treino
+            continue
         loss.backward()
         optimizer.step()
         running_loss += loss.item()
