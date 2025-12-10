@@ -1,31 +1,38 @@
 #!/bin/bash
-#SBATCH --job-name=meu_projeto
-#SBATCH --output=logs/%x_%j.out
-#SBATCH --error=logs/%x_%j.err
+#SBATCH --job-name=som_ids
+#SBATCH --partition=gpu
+#SBATCH -p short-complex
+#SBATCH --qos=complex
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
 #SBATCH --gres=gpu:1
-#SBATCH --partition=short-simple
-#SBATCH --time=12:00:00
+#SBATCH --time=2-00:00:00
+#SBATCH --output=logs/som_ids_%j.out
+#SBATCH --error=logs/som_ids_%j.err
 
-echo "🚀 Iniciando job em $(hostname)"
-date
 
-# Carrega o módulo python
-module load Python/3.10.8-GCCcore-12.2.0
+# Carrega o módulo do Miniforge
+module load miniforge3/2025.07
 
-# Ativa o ambiente Python
-source ~/SOM_DAGMM/venv/bin/activate
+# Habilita o comando conda dentro do job
+source "$(conda info --base)/etc/profile.d/conda.sh"
 
-# Caminho do projeto
-cd ~/projeto
 
-# Mostra GPU disponível
+# Ir para o diretório do projeto
+cd $HOME/SOM_DAGMM
+
+# Só pra conferência
 nvidia-smi
+echo "Iniciando treino em $(hostname)"
+echo "Começou em $(date)"
 
-# Executa o código
-python train.py
+# Rodar o train
+python3 train.py \
+  --dataset ids \
+  --embed label_encode \
+  --features numerical \
+  --epoch 100 \
+  --batch_size 1024
 
-echo "✅ Job finalizado!"
-date
+echo "Terminou em $(date)"

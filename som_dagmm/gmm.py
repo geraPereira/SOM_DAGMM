@@ -109,7 +109,8 @@ class Mixture(nn.Module):
             out = -0.5 * torch.mm(torch.mm(diff.view(1, -1), inv_sigma), diff)
             out = (self.Phi * torch.exp(out)) / (torch.sqrt(2. * np.pi * det_sigma))
             if with_log:
-                out = -torch.log(out)
+                x = torch.clamp(x, min=1e-12)
+                out = -torch.log(x) 
             out_values.append(float(out.data.cpu().numpy()))
 
         out = torch.autograd.Variable(torch.FloatTensor(out_values))
