@@ -103,4 +103,19 @@ pred = (out > threshold).numpy().astype(int)
 p, r, f, a = get_scores(pred, Y)
 print("Precision:", p, "Recall:", r, "F1 Score:", f, "AUROC:", a)
 
+############################
+# último eval, pelo modelo gerado anteriormente
+
+
+net = torch.load(save_path, weights_only=False)
+net.eval()
+out_ = net(test_dataT)
+threshold = np.percentile(out_, 20)
+pred = (out_ > threshold).numpy().astype(int)
+
+# Precision, Recall, F1
+a, p, r, f, auc = get_scores(pred, Y_test)
+print("Accuracy:", a, "Precision:", p, "Recall:", r, "F1 Score:", f, "AUROC:", auc)
+
+
 
