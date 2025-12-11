@@ -105,17 +105,19 @@ print("Precision:", p, "Recall:", r, "F1 Score:", f, "AUROC:", a)
 
 ############################
 # último eval, pelo modelo gerado anteriormente
-
-
+# Load the model with the best validation f1 score
 net = torch.load(save_path, weights_only=False)
 net.eval()
-out_ = net(test_dataT)
-threshold = np.percentile(out_, 20)
-pred = (out_ > threshold).numpy().astype(int)
+out = net(test_data)
+
+# Using the best threshold determined during training by the validation set
+threshold = np.percentile(out, args.threshold)
+pred = (out > threshold).numpy().astype(int)
 
 # Precision, Recall, F1
-a, p, r, f, auc = get_scores(pred, Y_test)
-print("Accuracy:", a, "Precision:", p, "Recall:", r, "F1 Score:", f, "AUROC:", auc)
+acc, p, r, f, a = get_scores(pred, Y_test)
+print("Accuracy:", acc, "Precision:", p, "Recall:", r, "F1 Score:", f, "AUROC:", a)
+
 
 
 
