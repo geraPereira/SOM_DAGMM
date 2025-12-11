@@ -65,12 +65,13 @@ def get_labels(data, name):
     return label
 
 def get_scores(y_pred, y):
+    accuracy = accuracy_score(y_pred, y)
     precision = precision_score(y_pred, y, average='binary')
     recall = recall_score(y_pred, y, average='binary')
     f1 = f1_score(y_pred, y, average='binary')
     fpr, tpr, thresholds = metrics.roc_curve(y, y_pred, pos_label=1)
     auc = metrics.auc(fpr, tpr)
-    return precision, recall, f1, auc
+    return accuracy, precision, recall, f1, auc
 
 def get_confusion_matrix(y_pred, y):
     tn, fp, fn, tp = confusion_matrix(y_pred, y).ravel()
@@ -128,6 +129,7 @@ def cosine_similarity(x1, x2, eps=1e-8):
     dist_x2 = torch.norm(x2, p=2, dim=1)  
 
     return dot_prod / np.max(dist_x1*dist_x2, eps)
+
 
 
 
