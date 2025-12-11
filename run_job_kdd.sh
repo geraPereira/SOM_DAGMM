@@ -8,8 +8,8 @@
 #SBATCH --mem=32G
 #SBATCH --gres=gpu:1
 #SBATCH --time=2-00:00:00
-#SBATCH --output=logs/som_ids_%j.out
-#SBATCH --error=logs/som_ids_%j.err
+#SBATCH --output=logs/som_kdd_%j.out
+#SBATCH --error=logs/som_kdd_%j.err
 
 
 # Carrega o módulo do Miniforge
@@ -34,5 +34,11 @@ python3 train.py \
   --features numerical \
   --epoch 100 \
   --batch_size 1024
+
+python eval.py \
+  --dataset kdd \
+  --embed label_encode \
+  --features numerical \
+  --threshold 20
 
 echo "Terminou em $(date)"
