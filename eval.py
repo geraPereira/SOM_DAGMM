@@ -34,7 +34,7 @@ def parse_args():
 args = parse_args()
 save_path = os.path.join(args.dataset + "_" + args.features + "_" + args.embed)
 #read data
-# get labels from dataset and drop them if available
+# get labels from dataset and drop them if available   
 if args.dataset == 'ids':
     data = load_data('data/CSE-CIC-IDS2018/CSE-CIC-IDS2018_sample5.csv')
     data.drop(['Timestamp'], axis=1, inplace=True)
@@ -117,6 +117,7 @@ pred = (out > threshold).numpy().astype(int)
 # Precision, Recall, F1
 acc, p, r, f, a = get_scores(pred, Y_test)
 print("Accuracy:", acc, "Precision:", p, "Recall:", r, "F1 Score:", f, "AUROC:", a)
+
 
 
 
